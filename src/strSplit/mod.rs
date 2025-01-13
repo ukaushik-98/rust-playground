@@ -5,6 +5,7 @@
 ///
 /// StrSplit searches for the delimeter in a string and returns that piece.
 /// It also mutates the string in place thus the remainder struct.
+#[derive(Debug)]
 pub struct StrSplit<'a> {
     /// Rest of the string left over
     /// Initially, the whole string
@@ -28,12 +29,15 @@ impl<'a> Iterator for StrSplit<'a> {
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(next_delim) = self.remainder.find(self.delimeter) {
             let until_delimeter = &self.remainder[..next_delim];
-            self.remainder = &self.remainder[next_delim..];
+            self.remainder = &self.remainder[(next_delim + self.delimeter.len())..];
             Some(until_delimeter)
         } else if self.remainder.is_empty() {
             None
         } else {
             let rest = self.remainder;
+            // note the 'static lifetime here.
+            // it's an example of lifetime convariance:
+            // 'static <: 'a
             self.remainder = "";
             Some(rest)
         }
@@ -43,6 +47,6 @@ impl<'a> Iterator for StrSplit<'a> {
 #[test]
 fn it_works() {
     let haystack = "a b c d e";
-    let letters = StrSplit::new(&haystack, " ").into_iter();
-    //assert_eq!(letters, vec!["a", "b", "c", "d", "e"].into_iter());
+    let letters = StrSplit::new(&haystack, " ");
+    assert!(letters.eq(vec!["a", "b", "c", "d", "e"].into_iter()));
 }
