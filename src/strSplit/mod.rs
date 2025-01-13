@@ -77,7 +77,7 @@ fn it_works() {
 
 #[test]
 fn tail() {
-    let haystack = "a b c d e";
+    let haystack = "a b c d e ";
     let letters = StrSplit::new(&haystack, " ");
     assert!(letters.eq(vec!["a", "b", "c", "d", "e", ""].into_iter()));
 }
