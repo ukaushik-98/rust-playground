@@ -27,11 +27,17 @@ impl<'a> Iterator for StrSplit<'a> {
     type Item = &'a str;
 
     fn next(&mut self) -> Option<Self::Item> {
+        // first, find the index of the where the delimeter matches in our string (aka the haystack/remainder)
+        // next, pattern match the index out
         if let Some(next_delim) = self.remainder.find(self.delimeter) {
+            // slice the string until the index.
+            // this is what we will wrap in Some() and return
             let until_delimeter = &self.remainder[..next_delim];
+            // finally, mutate our haystack/remainder to everything AFTER the delimeter
             self.remainder = &self.remainder[(next_delim + self.delimeter.len())..];
             Some(until_delimeter)
         } else if self.remainder.is_empty() {
+            // bug here to be fixed
             None
         } else {
             let rest = self.remainder;
