@@ -9,7 +9,7 @@ fn new_tester<'b>() {
     world = hello;
 }
 
-pub(crate) fn tester<'a>() {
+pub fn tester<'a>() {
     let mut hello: Box<&'static str> = Box::new("hello");
     let hello2: &'a str;
     {

@@ -1,11 +1,10 @@
-use std::cell::Cell;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-pub mod test;
+use rust_playground::variance;
 
 fn main() {
-    test::tester();
+    variance::tester();
     let arc_dumb_gaurd = Arc::new(Mutex::new(10));
 
     let counter = Arc::new(Mutex::new(0));
