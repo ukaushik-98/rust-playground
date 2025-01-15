@@ -6,16 +6,16 @@
 /// StrSplit searches for the delimeter in a string and returns that piece.
 /// It also mutates the string in place thus the remainder struct.
 #[derive(Debug)]
-pub struct StrSplit<'a> {
+pub struct StrSplit<'a, 'b> {
     /// Rest of the haystack/string left over
     /// Initially, the whole haystack/string
     remainder: Option<&'a str>,
     /// Delimeter is the pattern that we're looking for.
-    delimeter: &'a str,
+    delimeter: &'b str,
 }
 
-impl<'a> StrSplit<'a> {
-    pub fn new(haystack: &'a str, delimeter: &'a str) -> Self {
+impl<'a, 'b> StrSplit<'a, 'b> {
+    pub fn new(haystack: &'a str, delimeter: &'b str) -> Self {
         StrSplit {
             remainder: Some(haystack),
             delimeter,
@@ -23,7 +23,7 @@ impl<'a> StrSplit<'a> {
     }
 }
 
-impl<'a> Iterator for StrSplit<'a> {
+impl<'a, 'b> Iterator for StrSplit<'a, 'b> {
     type Item = &'a str;
 
     fn next(&mut self) -> Option<Self::Item> {
