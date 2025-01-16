@@ -68,6 +68,17 @@ impl<'a, 'b> Iterator for StrSplit<'a, 'b> {
     }
 }
 
+fn until_char<'a, 'b>(s: &'a str, c: &'b str) -> &'a str {
+    StrSplit::new(s, c).next().expect("")
+}
+
+#[test]
+fn until_char_works() {
+    let haystack = "hello";
+    let letters = until_char(&haystack, "o");
+    assert_eq!(letters, "hell");
+}
+
 #[test]
 fn it_works() {
     let haystack = "a b c d e";
