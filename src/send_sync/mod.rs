@@ -1,3 +1,4 @@
+mod sync;
 use std::cell::Cell;
 
 fn foo<'a>(x: &'a Vec<i32>) -> Cell<&'a Vec<i32>> {
