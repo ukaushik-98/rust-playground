@@ -34,6 +34,13 @@ fn foo3(keys: Vec<&str>, data: Vec<Vec<i32>>) -> HashMap<String, Vec<i32>> {
     data_map
 }
 
+fn foo4() {
+    let mut keys = vec!["key1", "key2", "key3"];
+    let ref_keys = &mut keys;
+    for k in keys.iter() {}
+    ref_keys.push("key5");
+}
+
 pub mod test {
     use super::*;
 
