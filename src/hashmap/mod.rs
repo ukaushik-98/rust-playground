@@ -1,4 +1,10 @@
-use std::{collections::HashMap, iter::zip};
+use std::{
+    cell::Cell,
+    collections::HashMap,
+    iter::zip,
+    sync::{Arc, Mutex},
+    thread,
+};
 
 // returning a hashmap doesn't work because the data is expected to outlive the bounds of the function
 // instead of the map being a ref to vec, ownership could be passed - see foo3
@@ -34,12 +40,12 @@ fn foo3(keys: Vec<&str>, data: Vec<Vec<i32>>) -> HashMap<String, Vec<i32>> {
     data_map
 }
 
-fn foo4() {
-    let mut keys = vec!["key1", "key2", "key3"];
-    let ref_keys = &mut keys;
-    for k in keys.iter() {}
-    ref_keys.push("key5");
-}
+// fn foo4() {
+//     let mut keys = vec!["key1", "key2", "key3"];
+//     let ref_keys = &mut keys;
+//     for k in keys.iter() {}
+//     ref_keys.push("key5");
+// }
 
 pub mod test {
     use super::*;
