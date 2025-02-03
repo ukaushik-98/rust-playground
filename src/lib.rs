@@ -1,3 +1,4 @@
+pub mod exercises;
 pub mod hashmap;
 pub mod lifetimes;
 pub mod send_sync;
