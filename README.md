@@ -4,12 +4,13 @@ This is a playground where I experiment on thoughts and implementations while wo
 
 ## Topic Tracker
 
-| Topic                   | Source                       | Complete |
-| ----------------------- | ---------------------------- | -------- |
-| Threading, Thread Scope | Adhoc                        | ❌       |
-| Lifetimes               | [lifetime stream][1]         | ✅       |
-| Lifetimes Being Wrong   | [lifetime misconceptions][2] | ✅       |
-| Variance                | Adhoc                        | ❌       |
+| Topic                        | Source                       | Complete |
+| ---------------------------- | ---------------------------- | -------- |
+| Threading, Thread Scope      | Adhoc                        | ❌       |
+| Lifetimes                    | [lifetime stream][1]         | ✅       |
+| Lifetimes Being Wrong        | [lifetime misconceptions][2] | ✅       |
+| Static Lifetime Experiments! | Adhoc                        | ✅       |
+| Variance                     | Adhoc                        | ❌       |
 
 [1]: https://www.youtube.com/watch?v=rAl-9HwD858
 [2]: https://github.com/pretzelhammer/rust-blog/blob/master/posts/common-rust-lifetime-misconceptions.md#5-if-it-compiles-then-my-lifetime-annotations-are-correct
