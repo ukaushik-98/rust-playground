@@ -22,8 +22,28 @@ pub fn foo3() {
     x.push("world");
 }
 
-// pub fn foo4<'a, T>() -> Vec<&'static T> {
-//     vec!["hello"]
+// T must be returned
+pub fn foo4<'a, T>(x: &'a T) -> Vec<&'a T> {
+    vec![x]
+}
+
+// this won't work because T must be returned and we're trying to return a string
+pub fn foo5<'a, T>(_x: &'a T) -> Vec<&'a str> {
+    let y = "hello";
+    vec![y]
+}
+
+// this won't work because T must be returned and we're trying to return a string
+// pub fn foo6<'a, T>(_x: &'a T) -> Vec<&'a T> {
+//     let y = "hello";
+//     vec![y]
+// }
+
+// same thing here - this won't work because the expected type T is not necessarly a string
+// pub fn foo4<'a, T>() -> Vec<&'a T> {
+//     let x = String::new();
+//     let y: &'a String = &x;
+//     vec![y]
 // }
 
 #[test]
