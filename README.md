@@ -8,6 +8,7 @@ This is a playground where I experiment on thoughts and implementations while wo
 | ---------------------------- | ---------------------------- | -------- |
 | Threading, Thread Scope      | Adhoc                        | ❌       |
 | Excercies                    | Adhoc                        | 🚧       |
+| Mutex Experiments            | Adhoc                        | 🚧       |
 | Hashmap Experiments          | Adhoc                        | ✅       |
 | Lifetimes                    | [lifetime stream][1]         | ✅       |
 | Lifetimes Being Wrong        | [lifetime misconceptions][2] | ✅       |
