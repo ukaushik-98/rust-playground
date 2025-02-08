@@ -30,10 +30,17 @@ fn foo2() {
     foo_sync(&mut x);
     // foo_mut(&mut x);
     x.push("check");
+    // arc doesnt give a mutable type, i.e. it doesn't implement DerefMut
+    // instead arc implements Deref and provides a immutable reference
+    // and this makes sense! we're trying to send a mutable owned object to multiple
+    // threads here and this isn't sound behavior.
+    //
+    // in order to actually get at the value inside, we need the ability to get mutable
+    // access via an immutable pointer, i.e. an interior mutability type with sync capaiblity
+    // and the guard implements implements DerefMut: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
     let ax = Arc::new(Mutex::new(x));
     let axc = Arc::clone(&ax);
     thread::spawn(move || {
-        let mut a = axc;
-        a.lock().unwrap().push("value");
+        axc.lock().unwrap().push("value");
     });
 }
