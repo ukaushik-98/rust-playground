@@ -37,7 +37,8 @@ fn foo2() {
     //
     // in order to actually get at the value inside, we need the ability to get mutable
     // access via an immutable pointer, i.e. an interior mutability type with sync capaiblity
-    // and the guard implements implements DerefMut: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
+    // This means that the guard must implement DerefMut: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
+    // Arc -> deref -> mutex -> mutex.lock -> deref mut -> push
     let ax = Arc::new(Mutex::new(x));
     let axc = Arc::clone(&ax);
     thread::spawn(move || {
