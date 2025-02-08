@@ -52,3 +52,10 @@ fn foo_test() {
     let f = f.lock().unwrap();
     assert_eq!(vec!["hello", ""], *f);
 }
+
+fn garbage<'a>(hello: &'a String) {
+    let y: &'a String = &hello;
+    // owned_runner().await;
+    let x: Vec<&String> = vec![y];
+    println!("x: {:?}", x);
+}
