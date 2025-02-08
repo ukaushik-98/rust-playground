@@ -36,14 +36,14 @@ pub fn foo5<'a, T>(_x: &'a T) -> Vec<&'a str> {
 // this won't work because T must be returned and we're trying to return a string
 // pub fn foo6<'a, T>(_x: &'a T) -> Vec<&'a T> {
 //     let y = "hello";
-//     vec![y]
+//     vec![y] // mismatched types expected reference `&T` found reference `&str`
 // }
 
 // same thing here - this won't work because the expected type T is not necessarly a string
-// pub fn foo4<'a, T>() -> Vec<&'a T> {
+// pub fn foo7<'a, T>() -> Vec<&'a T> {
 //     let x = String::new();
 //     let y: &'a String = &x;
-//     vec![y]
+//     vec![y] // mismatched types expected reference `&T` found reference `&str`
 // }
 
 #[test]
