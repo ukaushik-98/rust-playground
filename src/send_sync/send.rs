@@ -30,6 +30,7 @@ fn foo2() {
     foo_sync(&mut x);
     // foo_mut(&mut x);
     x.push("check");
+
     // arc doesnt give a mutable type, i.e. it doesn't implement DerefMut
     // instead arc implements Deref and provides a immutable reference
     // and this makes sense! we're trying to send a mutable owned object to multiple
@@ -38,10 +39,26 @@ fn foo2() {
     // in order to actually get at the value inside, we need the ability to get mutable
     // access via an immutable pointer, i.e. an interior mutability type with sync capaiblity
     // This means that the guard must implement DerefMut: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
-    // Arc -> deref -> mutex -> mutex.lock -> deref mut -> push
-    let ax = Arc::new(Mutex::new(x));
-    let axc = Arc::clone(&ax);
+    // Trait Flow: Arc -> deref -> mutex -> mutex.lock -> deref mut -> push
+    //
+    // Why do types that do implement deref mut like Box or Vec not work here?
+    // Arc only implements deref so it only gives our immutable reference.
+    // Push, however, requires a mutable reference and there's no way for us to get a mutable Box or Vec
+    // just from Arc.
+    // Trait Flow: Arc -> deref -> &Vec != &mut Vec required by push
+
+    let ax = Arc::new(x);
+    // let ax = Arc::new(Mutex::new(x));
+    let mut axc = Arc::clone(&ax);
+    // let axc = Arc::clone(&ax);
     thread::spawn(move || {
-        axc.lock().unwrap().push("value");
+        let axc = Arc::get_mut(&mut axc).unwrap();
+        axc.push("value");
+        // axc.lock().unwrap().push("value");
     });
+}
+
+#[test]
+fn foo2_test() {
+    foo2()
 }
