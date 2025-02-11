@@ -1,5 +1,6 @@
 pub mod exercises;
 pub mod hashmap;
+pub mod interior_mutability;
 pub mod lifetimes;
 pub mod mutex;
 pub mod send_sync;
