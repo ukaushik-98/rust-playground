@@ -88,6 +88,24 @@ fn foo9() {
     println!("{:?}", z);
 }
 
+fn foo10() {
+    let mut x = vec![1, 2, 3];
+    let y = &x;
+    let z = Cell::new(y);
+    // cant borrow mut ref because immutable ref is given
+    // x.push(5);
+    println!("{:?}", z);
+}
+
+fn foo11() {
+    let mut x = vec![1, 2, 3];
+    let y = &mut x;
+    let mut z = Cell::new(&mut x);
+    // cant borrow mut ref because mut ref is given
+    // x.push(5);
+    drop(z);
+}
+
 #[test]
 fn foo6_test() {
     assert_eq!(foo6(), vec![1, 2, 3, 4, 5]);
