@@ -61,6 +61,13 @@ fn bar(mut a: Cell<&mut Vec<i32>>) {
     a.get_mut().push(4);
 }
 
+fn foo7() {
+    let x = vec![1, 2, 3];
+    let y = &x;
+    let z = Cell::new(x);
+    println!("{:?}", y);
+}
+
 #[test]
 fn foo6_test() {
     assert_eq!(foo6(), vec![1, 2, 3, 4, 5]);
