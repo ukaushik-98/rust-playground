@@ -64,7 +64,9 @@ fn bar(mut a: Cell<&mut Vec<i32>>) {
 fn foo7() {
     let x = vec![1, 2, 3];
     let y = &x;
-    let z = Cell::new(x);
+    // can't move x because a pointer exists
+    // if line 70 is commented out though, it will work due to covariance
+    // let z = Cell::new(x);
     println!("{:?}", y);
 }
 
