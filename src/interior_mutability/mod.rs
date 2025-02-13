@@ -70,6 +70,24 @@ fn foo7() {
     println!("{:?}", y);
 }
 
+fn foo8() {
+    let mut x = vec![1, 2, 3];
+    let y = &mut x;
+    let z = Cell::new(y);
+    // cant get on mut ref because it doesnt implement copy
+    // let a = z.get();
+    // println!("{:?}", y);
+}
+
+fn foo9() {
+    let mut x = vec![1, 2, 3];
+    let y = &x;
+    let z = Cell::new(y);
+    // cant borrow mut ref because immutable ref is given
+    // let a = &mut x;
+    println!("{:?}", z);
+}
+
 #[test]
 fn foo6_test() {
     assert_eq!(foo6(), vec![1, 2, 3, 4, 5]);
