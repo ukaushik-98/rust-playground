@@ -50,7 +50,7 @@ pub fn foo5<'a, T>(_x: &'a T) -> Vec<&'a str> {
 fn foo_test() {
     let f = foo();
     let f = f.lock().unwrap();
-    assert_eq!(vec!["hello", ""], *f);
+    assert_eq!(vec!["hello", "world"], *f);
 }
 
 fn garbage<'a>(hello: &'a String) {

@@ -1,4 +1,5 @@
 use std::cell::Cell;
+mod garbage_cell;
 
 fn foo() {
     let mut x = vec![1, 2, 3];
@@ -12,9 +13,9 @@ fn foo() {
 fn foo2() {
     let mut x = vec![1, 2, 3];
     let y = &x;
-    // ❌ can't borrow x again as mut after mut borrow
+    // ❌ can't exclusively borrow x again as mut after shared borrow
     // let z = &mut x;
-    //  can't borrow x as mut since immutable pointer exists
+    // ❌  can't borrow x as mut since immutable pointer exists
     // x.push(5);
     println!("{:?}", y)
 }
@@ -22,7 +23,7 @@ fn foo2() {
 fn foo3() {
     let mut x = vec![1, 2, 3];
     let mut y = Cell::new(&mut x);
-    // ❌ can't borrow x again after placing mut ref into cell
+    // ❌ can't exclusively borrow x again after placing mut ref into cell
     // let a = &mut x;
     let z = y.get_mut();
     z.push(4);
@@ -33,11 +34,11 @@ fn foo4() {
     let mut x = vec![1, 2, 3];
     let mut y = Cell::new(&mut x);
 
-    // ❌ can't borrow x again after placing mut ref into cell
+    // ❌ can't exclusively borrow x again after placing mut ref into cell
     // let a = &mut x;
     let z = y.get_mut();
 
-    // ❌ can't borrow as mut again
+    // ❌ can't exclusively borrow as mut again
     // x.push(5);
     z.push(4);
 }
@@ -104,6 +105,36 @@ fn foo11() {
     // cant borrow mut ref because mut ref is given
     // x.push(5);
     drop(z);
+}
+
+fn foo12() {
+    let mut x = Cell::new(vec![1]);
+    let y = &x.get_mut()[0];
+    // x.set(vec![]);
+    // let y2 = &x.get_mut()[0];
+    // drop(x);
+    // let y3 = x.get_mut()[0];
+    println!("{}", y);
+    // println!("{}", y3);
+}
+
+struct Dumb<T> {
+    inner: T,
+}
+
+fn garbo<'a>() {
+    let mut x = String::from("");
+    let y = &x;
+    // x = String::from("hello");
+    println!("{}", y);
+}
+
+fn garbo2<'a>() {
+    let mut x = Dumb { inner: "" };
+    let y = &x.inner;
+    // cannot update bec
+    x.inner = "hello";
+    println!("{}", y);
 }
 
 #[test]
