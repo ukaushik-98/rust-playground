@@ -141,7 +141,27 @@ fn garbo2<'a>() {
     println!("{}", y);
 }
 
+fn bar2() {
+    let mut x = vec![1];
+    let y = &x;
+    x.push(4);
+}
+
+fn bar3() {
+    let a = vec![1];
+    let x = RefCell::new(a);
+    let mut z = x.borrow_mut();
+    z.push(2);
+    let y = x.borrow();
+    println!("{:?}", x);
+}
+
 #[test]
 fn foo6_test() {
     assert_eq!(foo6(), vec![1, 2, 3, 4, 5]);
+}
+
+#[test]
+fn bar3_test() {
+    bar3()
 }

@@ -1,4 +1,7 @@
-use std::sync::Mutex;
+use std::{
+    sync::{Arc, Mutex},
+    thread,
+};
 
 pub fn foo<'a>() -> Mutex<Vec<&'a str>> {
     let x = vec!["hello"];
@@ -16,6 +19,18 @@ pub fn foo<'a>() -> Mutex<Vec<&'a str>> {
 }
 
 pub fn foo_send<T: Send>(_v: T) {}
+
+pub fn foo_thread() {
+    let x = Mutex::new(vec!["hello"]);
+    let mx = x.lock().unwrap();
+    let a = Arc::new(&mx);
+    let ac = Arc::clone(&a);
+    foo_send(ac);
+    // let _ = thread::spawn(move || {
+    //     let mac = ac;
+    // })
+    // .join();
+}
 
 pub fn foo2() -> Vec<&'static str> {
     vec!["hello"]
