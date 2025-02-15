@@ -1,3 +1,5 @@
+use std::ops::Deref;
+
 use super::garbage_ref_cell::{GarbageRefCell, RefCellState};
 
 pub struct GarbageRef<'garbage_ref_cell, T> {
@@ -21,5 +23,13 @@ impl<'garbage_ref_cell, T> Drop for GarbageRef<'garbage_ref_cell, T> {
                 self.refcell.state.set(RefCellState::Shared(x - 1));
             }
         }
+    }
+}
+
+impl<'garbage_ref_cell, T> Deref for GarbageRef<'garbage_ref_cell, T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        unsafe { &*self.refcell.value.get() }
     }
 }
