@@ -1,4 +1,5 @@
-use std::cell::Cell;
+use std::cell::{Cell, RefCell};
+mod g2;
 mod garbage_cell;
 mod garbage_ref;
 mod garbage_ref_cell;
