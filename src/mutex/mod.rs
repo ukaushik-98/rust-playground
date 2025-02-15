@@ -6,11 +6,16 @@ pub fn foo<'a>() -> Mutex<Vec<&'a str>> {
     {
         // the same principle from line 19 is occurring here
         let mut y = mx.lock().unwrap();
-
         y.push("world");
+        // this is legal because MutexGuard is Sync i.e. &MutexGuard is Send
+        foo_send(&y);
+        // this is not legal because MutexGuard is Sync but !Send
+        // foo_send(y);
     }
     mx
 }
+
+pub fn foo_send<T: Send>(_v: T) {}
 
 pub fn foo2() -> Vec<&'static str> {
     vec!["hello"]
