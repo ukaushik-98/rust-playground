@@ -1,5 +1,8 @@
 use std::cell::Cell;
 mod garbage_cell;
+mod garbage_ref;
+mod garbage_ref_cell;
+mod garbage_ref_mut;
 
 fn foo() {
     let mut x = vec![1, 2, 3];
@@ -132,8 +135,8 @@ fn garbo<'a>() {
 fn garbo2<'a>() {
     let mut x = Dumb { inner: "" };
     let y = &x.inner;
-    // cannot update bec
-    x.inner = "hello";
+    // cannot update because of borrow
+    // x.inner = "hello";
     println!("{}", y);
 }
 
