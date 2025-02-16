@@ -1,4 +1,4 @@
-use std::cell::UnsafeCell;
+use std::cell::{Cell, UnsafeCell};
 
 pub struct GCell2<T> {
     value: UnsafeCell<T>,
@@ -76,4 +76,15 @@ fn test_4() {
     let y = &x[0];
     // x[0] = "world";
     println!("{:?}", y);
+}
+
+#[test]
+fn test_5() {
+    let x = GCell2::new(vec![1, 2, 3]);
+    let first = &x.bad_get()[0];
+
+    // BAD behavior - first should have been 1 but it changes under the hood
+    // e.g. 1702064993
+    x.set(vec![]);
+    assert_eq!(*first, 1)
 }
