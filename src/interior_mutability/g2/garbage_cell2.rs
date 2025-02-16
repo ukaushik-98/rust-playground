@@ -85,6 +85,9 @@ fn test_5() {
 
     // BAD behavior - first should have been 1 but it changes under the hood
     // e.g. 1702064993
+    // potential link to aliasing issue? in either case general design pattern:
+    // if we have an interior mutability type do not give out an inner reference to the T
+    // without some dereferncing gurantee
     x.set(vec![]);
     assert_eq!(*first, 1)
 }
