@@ -39,6 +39,7 @@ fn test_1() {
     let ar = &mut a;
     let x = GCell2::new(ar);
     let y = x.bad_get();
+
     // cannot borrow `a` as mutable more than once at a time second mutable borrow occurs here
     // a.push("value");
 
@@ -58,4 +59,21 @@ fn test_2() {
     // `x` is assigned to here but it was already borrowed
     // x = "world";
     assert_eq!(*y, "hello");
+}
+
+#[test]
+fn test_3() {
+    let x = String::from("hello");
+    let z = GCell2::new(x);
+    let y = z.bad_get();
+    z.set(String::from("world"));
+    assert_eq!(*y, String::from("hello"));
+}
+
+#[test]
+fn test_4() {
+    let mut x = vec!["hello"];
+    let y = &x[0];
+    // x[0] = "world";
+    println!("{:?}", y);
 }

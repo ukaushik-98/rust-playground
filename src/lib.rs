@@ -1,3 +1,4 @@
+pub mod aliasing;
 pub mod exercises;
 pub mod hashmap;
 pub mod interior_mutability;
