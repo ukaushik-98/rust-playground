@@ -5,7 +5,7 @@ pub struct GCell2<T> {
 }
 
 impl<T> GCell2<T> {
-    pub fn new(value: T) -> Self {
+    pub fn new(value: T) -> GCell2<T> {
         GCell2 {
             value: UnsafeCell::new(value),
         }
@@ -35,10 +35,19 @@ impl<T> GCell2<T> {
 
 #[test]
 fn test_1() {
-    let x = GCell2::new("hello");
-    let y = *x.bad_get();
-    x.set("world");
-    assert_eq!(y, "hello");
+    let mut a = vec!["hello"];
+    let ar = &mut a;
+    let x = GCell2::new(ar);
+    let y = x.bad_get();
+    // cannot borrow `a` as mutable more than once at a time second mutable borrow occurs here
+    // a.push("value");
+
+    // borrow of moved value: `ar` value borrowed here after move
+    // println!("{:?}", ar);
+
+    // x.set("world");
+    // assert_eq!(y, "hello");
+    // println!("{:?}", ar);
 }
 
 #[test]
