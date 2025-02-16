@@ -150,8 +150,10 @@ fn bar2() {
 fn bar3() {
     let a = vec![1];
     let x = RefCell::new(a);
-    let mut z = x.borrow_mut();
-    z.push(2);
+    {
+        let mut z = x.borrow_mut();
+        z.push(2);
+    }
     let y = x.borrow();
     println!("{:?}", x);
 }
