@@ -1,4 +1,8 @@
-use std::cell::{Cell, UnsafeCell};
+use std::{
+    cell::{Cell, UnsafeCell},
+    rc::Rc,
+    sync::Arc,
+};
 
 pub struct GCell2<T> {
     value: UnsafeCell<T>,
@@ -31,6 +35,28 @@ impl<T> GCell2<T> {
         // For this use case, see test_1 for this bad behavior in action
         unsafe { &*self.value.get() }
     }
+}
+
+fn full() -> Vec<&'static str> {
+    let x = Cell::new(vec!["hello"]);
+    let y = Rc::new(x);
+    let z = Rc::clone(&y);
+    full2(z);
+    let a = y.take();
+    println!("{:?}", a);
+    a
+}
+
+fn full2(z: Rc<Cell<Vec<&str>>>) {
+    let a = z.take();
+    let mut temp = Vec::from_iter(a);
+    temp.push("world");
+    z.set(temp);
+}
+
+#[test]
+fn full_test() {
+    assert_eq!(full(), vec!["hello", "world"]);
 }
 
 #[test]

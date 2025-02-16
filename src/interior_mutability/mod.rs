@@ -4,6 +4,7 @@ mod garbage_cell;
 mod garbage_ref;
 mod garbage_ref_cell;
 mod garbage_ref_mut;
+mod rc;
 
 fn foo() {
     let mut x = vec![1, 2, 3];
