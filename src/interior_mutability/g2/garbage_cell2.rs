@@ -2,6 +2,7 @@ use std::{
     cell::{Cell, UnsafeCell},
     rc::Rc,
     sync::Arc,
+    thread,
 };
 
 pub struct GCell2<T> {

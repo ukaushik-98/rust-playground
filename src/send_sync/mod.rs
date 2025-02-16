@@ -21,3 +21,17 @@ fn bar() {
     let y = foo(&x);
     let b = y;
 }
+
+fn foo_sync<T: Sync>(x: T) {}
+
+fn foo_send<T: Send>(x: T) {}
+
+fn foo3() {
+    let mut x = String::from("hello");
+    foo_sync(&mut x);
+}
+
+fn foo4() {
+    let mut x = String::from("hello");
+    foo_send(&mut x);
+}
