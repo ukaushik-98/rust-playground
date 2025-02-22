@@ -35,3 +35,10 @@ fn foo4() {
     let mut x = String::from("hello");
     foo_send(&mut x);
 }
+
+fn dumb() {
+    let mut x = vec![42];
+    let y = &x[0];
+    // x = vec![];
+    println!("{:?}", y);
+}
